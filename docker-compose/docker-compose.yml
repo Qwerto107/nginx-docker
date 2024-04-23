@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  nginx:
+    image: qwerto107/nginx:1.25.4
+    container_name: nginx
+    restart: always
+    volumes:
+      - /home/wwwroot:/home/wwwroot
+      - /home/wwwlogs:/home/wwwlogs
+      - /usr/local/nginx/conf:/usr/local/nginx/conf
+    environment:
+      TZ: "Asia/Shanghai"
+    ports:
+      - 80:80/tcp
+      - 443:443/tcp
+      - 443:443/udp
+    network_mode: host
