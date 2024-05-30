@@ -38,8 +38,8 @@ install_dependencies() {
 
 # 下载 nginx 源码
 download_nginx() {
-    wget https://nginx.org/download/nginx-1.25.4.tar.gz
-    tar zxvf nginx-1.25.4.tar.gz
+    wget https://nginx.org/download/nginx-1.27.0.tar.gz
+    tar zxvf nginx-1.27.0.tar.gz
     check_status "Nginx source code download"
 }
 
@@ -127,7 +127,7 @@ apply_patches() {
     curl https://raw.githubusercontent.com/kn007/patch/master/openssl-1.1.1.patch | patch -p1
     cd ..
 
-    cd nginx-1.25.4/
+    cd nginx-1.27.0/
     curl https://raw.githubusercontent.com/kn007/patch/master/nginx_dynamic_tls_records.patch | patch -p1
     cd ..
     check_status "Patches applied"
@@ -135,7 +135,7 @@ apply_patches() {
 
 # 编译和安装 Nginx
 compile_and_install_nginx() {
-    cd nginx-1.25.4/
+    cd nginx-1.27.0/
     ./configure --user=www --group=www --prefix=/usr/local/nginx --with-openssl=../openssl-1.1.1w --with-openssl-opt='zlib -mtune=generic -ljemalloc -Wl,-flto' --with-http_ssl_module --with-http_v2_module --with-http_sub_module --with-http_gzip_static_module --with-http_stub_status_module --with-zlib=../zlib-cf --with-pcre=../pcre-8.45 --with-pcre-jit --add-module=../ngx_brotli --add-module=../nginx-ct --add-module=../headers-more-nginx-module --with-stream --with-stream_realip_module --with-stream_ssl_module --with-stream_ssl_preread_module --with-http_v3_module --add-module=../ngx_http_geoip2_module --with-ld-opt='-Wl,-z,relro -Wl,-z,now -fPIC -ljemalloc -lrt' --with-cc-opt='-mtune=generic'
     make -j$(cat /proc/cpuinfo | grep "processor" | wc -l)
     make install
