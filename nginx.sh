@@ -95,12 +95,6 @@ download_and_make_brotli() {
     check_status "ngx_brotli source code download and make"
 }
 
-# 下载 nginx-ct 源码
-download_nginx_ct() {
-    git clone https://github.com/grahamedgecombe/nginx-ct.git
-    check_status "nginx-ct source code download"
-}
-
 # 下载 headers-more-nginx-module 源码
 download_headers_more_module() {
     git clone https://github.com/openresty/headers-more-nginx-module.git
@@ -136,7 +130,7 @@ apply_patches() {
 # 编译和安装 Nginx
 compile_and_install_nginx() {
     cd nginx-1.27.0/
-    ./configure --user=www --group=www --prefix=/usr/local/nginx --with-openssl=../openssl-1.1.1w --with-openssl-opt='zlib -mtune=generic -ljemalloc -Wl,-flto' --with-http_ssl_module --with-http_v2_module --with-http_sub_module --with-http_gzip_static_module --with-http_stub_status_module --with-zlib=../zlib-cf --with-pcre=../pcre-8.45 --with-pcre-jit --add-module=../ngx_brotli --add-module=../nginx-ct --add-module=../headers-more-nginx-module --with-stream --with-stream_realip_module --with-stream_ssl_module --with-stream_ssl_preread_module --with-http_v3_module --add-module=../ngx_http_geoip2_module --with-ld-opt='-Wl,-z,relro -Wl,-z,now -fPIC -ljemalloc -lrt' --with-cc-opt='-mtune=generic'
+    ./configure --user=www --group=www --prefix=/usr/local/nginx --with-openssl=../openssl-1.1.1w --with-openssl-opt='zlib -mtune=generic -ljemalloc -Wl,-flto' --with-http_ssl_module --with-http_v2_module --with-http_sub_module --with-http_gzip_static_module --with-http_stub_status_module --with-zlib=../zlib-cf --with-pcre=../pcre-8.45 --with-pcre-jit --add-module=../ngx_brotli --add-module=../headers-more-nginx-module --with-stream --with-stream_realip_module --with-stream_ssl_module --with-stream_ssl_preread_module --with-http_v3_module --add-module=../ngx_http_geoip2_module --with-ld-opt='-Wl,-z,relro -Wl,-z,now -fPIC -ljemalloc -lrt' --with-cc-opt='-mtune=generic'
     make -j$(cat /proc/cpuinfo | grep "processor" | wc -l)
     make install
     check_status "Nginx compilation and installation"
