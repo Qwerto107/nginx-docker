@@ -29,4 +29,4 @@ jobs:
           push: true
           tags: |
             qwerto107/nginx:latest
-            qwerto107/nginx:1.27.1
+            qwerto107/nginx:1.27.2

@@ -2,7 +2,7 @@ version: '3'
 
 services:
   nginx:
-    image: qwerto107/nginx:1.27.1
+    image: qwerto107/nginx:latest
     container_name: nginx
     restart: always
     volumes:
