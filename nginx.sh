@@ -85,7 +85,7 @@ apply_patches() {
 # 编译和安装 Nginx
 compile_and_install_nginx() {
     cd nginx-${nginx_version}/
-    ./configure --user=www --group=www --prefix=/usr/local/nginx --with-openssl=../openssl-${openssl_version} --with-openssl-opt='zlib -mtune=generic -ljemalloc -Wl,-flto' --with-http_ssl_module --with-http_v2_module --with-http_sub_module --with-http_gzip_static_module --with-http_stub_status_module --with-zlib=../zlib-cf --with-pcre=../pcre-8.45 --with-pcre-jit --add-module=../ngx_brotli --add-module=../headers-more-nginx-module --with-stream --with-stream_realip_module --with-stream_ssl_module --with-stream_ssl_preread_module --with-http_v3_module --with-ld-opt='-Wl,-z,relro -Wl,-z,now -fPIC -lrt' --with-cc-opt='-mtune=generic'
+    ./configure --user=www --group=www --prefix=/usr/local/nginx --with-openssl=../openssl-${openssl_version} --with-openssl-opt='zlib -mtune=generic -Wl,-flto' --with-http_ssl_module --with-http_v2_module --with-http_sub_module --with-http_gzip_static_module --with-http_stub_status_module --with-zlib=../zlib-cf --with-pcre=../pcre-8.45 --with-pcre-jit --add-module=../ngx_brotli --add-module=../headers-more-nginx-module --with-stream --with-stream_realip_module --with-stream_ssl_module --with-stream_ssl_preread_module --with-http_v3_module --with-ld-opt='-Wl,-z,relro -Wl,-z,now -fPIC -lrt' --with-cc-opt='-mtune=generic'
     make -j$(cat /proc/cpuinfo | grep "processor" | wc -l)
     make install
     check_status "Nginx compilation and installation"
