@@ -14,7 +14,7 @@ check_status() {
 # 安装依赖
 install_dependencies() {
     apt update
-	apt install make cmake gcc g++ git libz-dev bzip2 libzstd-dev -y
+	apt install make cmake gcc g++ git libz-dev bzip2 libzstd-dev wget curl -y
     check_status "Dependencies installation"
 }
 
