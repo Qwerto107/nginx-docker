@@ -1,7 +1,7 @@
 #!/bin/sh
 
-openssl_version="1.1.1w"
-nginx_version="1.28.0"
+openssl_version="3.5.4"
+nginx_version="1.29.4"
 
 check_status() {
     if [ $? -eq 0 ]; then
@@ -13,10 +13,9 @@ check_status() {
 }
 # 安装依赖
 install_dependencies() {
-    apk update
-    apk add --no-cache make cmake gcc g++ git zlib zlib-dev libc-dev pcre-dev perl linux-headers patch curl
+    apt update
+	apt install make cmake gcc g++ git libz-dev bzip2 libzstd-dev -y
     check_status "Dependencies installation"
-    cat /proc/cpuinfo
 }
 
 # 下载 nginx 源码
@@ -71,12 +70,6 @@ download_headers_more_module() {
 
 # 打补丁
 apply_patches() {
-    cd openssl-${openssl_version}/
-    curl https://raw.githubusercontent.com/kn007/patch/master/openssl-1.1.1.patch | patch -p1
-    cd ..
-
-    cd nginx-${nginx_version}/
-    curl https://raw.githubusercontent.com/kn007/patch/master/nginx_dynamic_tls_records.patch | patch -p1
     curl https://raw.githubusercontent.com/Qwerto107/nginx-patch/main/error_page.patch | patch -p1
     cd ..
     check_status "Patches applied"
